@@ -370,9 +370,8 @@ if (isset($_POST['addrowsub'])) {
 
     $sql = "SELECT * FROM invoice_details WHERE productId = :productId and status like '%$statusadd%' and employeeId=:emp ";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":productId", $_GET['addp'], PDO::PARAM_INT);
+    $stmt->bindParam(":productId", $_POST['myid'], PDO::PARAM_INT);
     $stmt->bindParam(":emp", $create_by, PDO::PARAM_INT);
-
 
     $stmt->execute();
     $invoice_detail = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -383,6 +382,7 @@ if (isset($_POST['addrowsub'])) {
     $stmt->execute();
     $productqty = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
     if ($invoice_product_id) {
         // echo "<script> alert(1)</script>";
         $prodcutminus = $productqty['qty'] -= 1;
@@ -390,7 +390,6 @@ if (isset($_POST['addrowsub'])) {
         $totalqty = $invoice_detail['qty'] += 1;
         $sql = "UPDATE products SET qty=:qty WHERE id=:id";
         $stmt = $conn->prepare($sql);
-
         $stmt->bindParam(":qty", $prodcutminus, PDO::PARAM_INT);
         $stmt->bindParam(":id", $_POST['myid'], PDO::PARAM_INT);
         $stmt->execute();
