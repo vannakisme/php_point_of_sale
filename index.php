@@ -49,7 +49,7 @@
           <a href="index.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="contact.php" class="nav-link">Contact</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <form action="" method="POST">
@@ -333,7 +333,58 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item ">
+              <a href="#" class="nav-link ">
+                <i class="fa-brands nav-icon fa-product-hunt"></i>
+                <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
+                <p>
+                  Category
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="categoryList.php" class="nav-link ">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Category List </p>
+                  </a>
+                </li>
 
+                <li class="nav-item">
+                  <a href="addcategory.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Category</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item ">
+              <a href="#" class="nav-link ">
+                <i class="fa-brands nav-icon fa-product-hunt"></i>
+                <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
+                <p>
+                  Customer
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="productlist.php" class="nav-link ">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Customer List </p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="customer.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Customer</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
             <li class="nav-item ">
               <a href="customer.php" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>

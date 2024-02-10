@@ -1,6 +1,4 @@
-<?php include "isset/script.php";
-
-?>
+<?php include "isset/script.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -367,7 +365,6 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-
                                     <h3 class="card-title d-flex align-items-center p-0 m-0 ">
                                         <span style="padding-right: 5px;">Row</span>
                                         <select name="row" id="row" class="custom-select-sm m-0 p-0 col-md-12">
@@ -421,6 +418,7 @@
                                         </tbody>
                                     </table>
                                     <!-- /.card-body -->
+                                    <div id="your-button-id">lksdfj</div>
                                     <div class="card-header">
                                         <h3 class="card-title"></h3>
 
@@ -494,33 +492,17 @@
             var $deleteIcon = $(this); // Store the reference to $(this)
 
             console.log(icondelete);
-            Swal.fire({
-                title: 'Confirmation',
-                text: 'Are you sure?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'OK',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        method: 'post',
-                        url: 'isset/deleteproduct.php',
-                        data: {
-                            icondeletes: icondelete
-                        },
-                        success: function(response) {
-                            $(".show").html(response);
-                            $deleteIcon.closest('tr').remove(); // Use the stored reference
-                        }
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // Cancel button clicked
-                    // Add your logic here
-
+            $.ajax({
+                method: 'post',
+                url: 'isset/deleteproduct.php',
+                data: {
+                    icondeletes: icondelete
+                },
+                success: function(response) {
+                    $(".show").html(response);
+                    $deleteIcon.closest('tr').remove(); // Use the stored reference
                 }
             });
-
         });
     });
 </script>
@@ -541,6 +523,29 @@
         })
     })
 </script>
+<script>
+    $(document).ready(function() {
+        $('#your-button-id').click(function() {
+            Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // OK button clicked
 
+                    // Add your logic here
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Cancel button clicked
+                    // Add your logic here
+
+                }
+            });
+        });
+    });
+</script>
 
 </html>

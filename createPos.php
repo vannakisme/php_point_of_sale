@@ -529,7 +529,7 @@ include "isset/script.php";
                             <!-- this row will not appear when printing -->
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <a href="pages/examples/invoice.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                                    <a href="pages/examples/invoice.html" rel="noopener" target="_blank" class="btn btn-default myprint"><i class="fas fa-print"></i> Print</a>
                                     <button type="submit" name="btnorder" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                         Payment
                                     </button>
@@ -610,6 +610,12 @@ include "isset/script.php";
             }
         })
 
+    })
+</script>
+<script>
+    var myprint = document.querySelector(".myprint");
+    myprint.addEventListener("click", function() {
+        window.addEventListener("load", window.print());
     })
 </script>
 

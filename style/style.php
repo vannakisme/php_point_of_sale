@@ -69,3 +69,11 @@
         object-fit: cover;
     }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    var myprint = document.querySelector(".myprint");
+    myprint.addEventListener("click", function() {
+        window.addEventListener("load", window.print());
+    })
+</script>

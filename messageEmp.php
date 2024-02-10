@@ -1,6 +1,4 @@
-<?php include "isset/script.php";
-
-?>
+<?php include "isset/script.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -362,87 +360,81 @@
                 <div class="container-fluid">
                     <div class="row">
 
-
-                        <!-- /.card-header -->
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-
-                                    <h3 class="card-title d-flex align-items-center p-0 m-0 ">
-                                        <span style="padding-right: 5px;">Row</span>
-                                        <select name="row" id="row" class="custom-select-sm m-0 p-0 col-md-12">
-                                            <option value="5">4</option>
-                                            <option value="10">10</option>
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-
-                                        </select>
-                                    </h3>
-
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control listsearch float-right" placeholder="Search">
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="card direct-chat direct-chat-primary col-12">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">Direct Chat</h3>
+                                <?php print_r($_POST); ?>
+                                <div class="card-tools">
+                                    <span title="3 New Messages" class="badge badge-primary">3</span>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <!-- Conversations are loaded here -->
+                                <div class="direct-chat-messages">
+                                    <!-- Message. Default to the left -->
+                                    <?php foreach ($messageEmp as $key => $val) {
+                                        if ($val['user_one'] == $create_by) {
+                                    ?>
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-left"><?= $val['employee_name'] ?></span>
+                                                    <span class="direct-chat-timestamp float-right"><?= date("j M g:i a", strtotime($val['time'])); ?></span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="image/<?= $val['image'] ?>" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    <?= $val['text'] ?>
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                        <?php } else { ?>
+                                            <!-- Message to the right -->
+                                            <div class="direct-chat-msg right">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-right"><?= $val['employee_name'] ?></span>
+                                                    <span class="direct-chat-timestamp float-left"><?= date("j M g:i a", strtotime($val['time'])); ?></span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="image/<?= $val['image'] ?>" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    <?= $val['text'] ?>
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+                                    <?php }
+                                    } ?>
+                                    <!-- /.direct-chat-msg -->
 
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table  table-head-fixed text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 10px">No</th>
-
-                                                <th class="">Name</th>
-                                                <th class="">Slug</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="productsearch">
-                                            <?php foreach ($listproduct as $key => $val) { ?>
-                                                <tr>
-                                                    <td><?= $key + 1 ?></td>
-
-                                                    <td class="align-middle "><?= $val['product_name'] ?></td>
-                                                    <td class="align-middle "><?= $val['category'] ?></td>
-                                                    <td class="align-middle text-center">
-                                                        <i data-productdelete="<?php echo $val['id'] ?>" class="fa-solid fa-trash p-1 pointer iconhover icondelete"></i>
-                                                        <a href="addproduct.php?ideditpro=<?php echo $val['id'] ?>"><i class="fa-solid p-1 iconhover fa-pencil"></i></a>
-                                                        <a href="product_details.php?pageProduct=<?= $val['id'] ?>"><i class="fa-solid fa-file-signature iconhover text-dark p-1"></i></a>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                    <!-- /.card-body -->
-                                    <div class="card-header">
-                                        <h3 class="card-title"></h3>
-
-                                        <div class="card-tools">
-                                            <ul class="pagination pagination-sm float-right">
-                                                <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- /.card -->
-                                    </div>
+                                    <!-- /.direct-chat-pane -->
                                 </div>
                                 <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <form method="post">
+                                        <div class="input-group">
+                                            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                            <span class="input-group-append">
+                                                <button type="submit" name="btnmessage" class="btn btn-primary">Send</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card-footer-->
                             </div>
-                            <!-- /.card -->
 
                         </div>
-
 
                     </div>
                     <!-- /.row -->
@@ -494,33 +486,17 @@
             var $deleteIcon = $(this); // Store the reference to $(this)
 
             console.log(icondelete);
-            Swal.fire({
-                title: 'Confirmation',
-                text: 'Are you sure?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'OK',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        method: 'post',
-                        url: 'isset/deleteproduct.php',
-                        data: {
-                            icondeletes: icondelete
-                        },
-                        success: function(response) {
-                            $(".show").html(response);
-                            $deleteIcon.closest('tr').remove(); // Use the stored reference
-                        }
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // Cancel button clicked
-                    // Add your logic here
-
+            $.ajax({
+                method: 'post',
+                url: 'isset/deleteproduct.php',
+                data: {
+                    icondeletes: icondelete
+                },
+                success: function(response) {
+                    $(".show").html(response);
+                    $deleteIcon.closest('tr').remove(); // Use the stored reference
                 }
             });
-
         });
     });
 </script>

@@ -598,7 +598,8 @@
       // Retrieve values and perform Ajax request
       $('.table_show').on('keyup', '.qty, .price, .item_id', function() {
 
-        var row = $(this).closest('tr');
+        var row = $(this).closest('tr ');
+        
         var item_id = row.find('.item_id').val();
         var qty = parseFloat(row.find('.qty').val());
         var price = parseFloat(row.find('.price').val());

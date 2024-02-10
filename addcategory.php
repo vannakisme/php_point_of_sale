@@ -374,183 +374,49 @@ include "isset/script.php";
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <section class="content">
+            <div class="content">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-3">
+                    <?php
+                    // print_r($_POST);
+                    ?>
+                    <form id="quickForm" method="POST" enctype="multipart/form-data" novalidate="novalidate">
+                        <div class="row">
 
-                            <!-- Profile Image -->
-                            <div class="card card-primary card-outline">
-                                <div class="card-body box-profile">
-                                    <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle" src="image/<?php echo isset($_GET['empdetails']) ? $getempdetail['image'] : $_SESSION['login']['image'] ?>" style="width: 100px;height: 100px;object-fit: cover;" alt="User profile picture">
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
 
-                                    <h3 class="profile-username text-center"><?php echo isset($_GET['empdetails']) ? $getempdetail['employee_name'] : $_SESSION['login']['employee_name'] ?></h3>
+                                    <!-- jquery validation -->
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Add Category <small></small></h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <!-- form start -->
 
-                                    <p class="text-muted text-center">Software Engineer</p>
-
-                                    <ul class="list-group list-group-unbordered mb-3">
-                                        <li class="list-group-item">
-                                            <b>User ID</b> <a class="float-right"><?php echo isset($_GET['empdetails']) ? $getempdetail['userid'] : $_SESSION['login']['userid'] ?></a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Gender</b> <a class="float-right"><?php echo isset($_GET['empdetails']) ? $getempdetail['gender'] : $_SESSION['login']['gender'] ?></a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Phone</b> <a class="float-right"><?php echo isset($_GET['empdetails']) ? $getempdetail['phone'] : $_SESSION['login']['phone'] ?></a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Salary</b> <a class="float-right">$ <?php echo isset($_GET['empdetails']) ? $getempdetail['salary'] : $_SESSION['login']['salary'] ?></a>
-                                        </li>
-                                    </ul>
-
-                                    <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-
-                            <!-- About Me Box -->
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">About Me</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-
-
-                                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
-                                    <p class="text-muted"><?php echo isset($_GET['empdetails']) ? $getempdetail['address'] : $_SESSION['login']['address'] ?></p>
-
-                                    <hr>
-
-                                    <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
-                                    <p class="text-muted">
-                                        <span class="tag tag-danger">UI Design</span>
-                                        <span class="tag tag-success">Coding</span>
-                                        <span class="tag tag-info">Javascript</span>
-                                        <span class="tag tag-warning">PHP</span>
-                                        <span class="tag tag-primary">Node.js</span>
-                                    </p>
-
-                                    <hr>
-
-                                    <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-                                    <p class="text-muted">
-                                        <span style="display: none;" class="getempID"><?php echo isset($_GET['empdetails']) ? $getempdetail['id'] : '' ?></span>
-                                        <?php echo isset($_GET['empdetails']) ? $getempdetail['script'] : $_SESSION['login']['script'] ?>
-                                    </p>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-md-9">
-                            <div class="card">
-                                <div class="card-header p-2">
-                                    <ul class="nav nav-pills">
-                                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
-                                    </ul>
-                                </div><!-- /.card-header -->
-                                <div class="content">
-                                    <div class="container-fluid">
-                                        <?php
-                                        // print_r($_POST);
-                                        ?>
-                                        <div class="col-md-12">
-                                            <div class="card">
-                                                <div class="card-header">
-
-                                                    <div class="card-tools">
-                                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                                            <input type="text" name="table_search" class="form-control listsearch float-right" placeholder="Search">
-
-                                                            <div class="input-group-append">
-                                                                <button type="submit" class="btn btn-default">
-                                                                    <i class="fas fa-search"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <?= $already ?>
                                                     </div>
                                                 </div>
-
-                                                <!-- /.card-header -->
-                                                <div class="card-body table-responsive p-0">
-                                                    <table class="table  table-head-fixed text-nowrap">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Invoice No</th>
-                                                                <th class="">Name</th>
-                                                                <th>Order Date</th>
-                                                                <th>Payment</th>
-                                                                <th>Total</th>
-                                                                <th>Status</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="search_detail">
-                                                            <?php
-
-                                                            foreach ($invoicepcomplete13 as $Key => $val) { ?>
-                                                                <tr>
-                                                                    <td class="align-middle"><?= $Key + 1 ?> </td>
-                                                                    <td class="align-middle">VN-<?= $val['paymentID'] ?></td>
-                                                                    <td class="align-middle"><?= $val['firstname'] . " " . $val['firstname'] ?></td>
-                                                                    <td class="align-middle"><?= date("Y-m-d", strtotime($val['create_at'])); ?></td>
-                                                                    <td class="align-middle"><?= $val['payment_method'] ?></td>
-                                                                    <td class="align-middle"><?php if ($val['status'] == 'complete') {
-                                                                                                    $totalcomp = $val['total_amount'];
-                                                                                                    echo number_format($totalcomp, 2);
-                                                                                                } else {
-                                                                                                    $totalpay = $val['total_amount'] - $val['paid_amount'];
-                                                                                                    echo number_format($totalpay, 2);
-                                                                                                }
-                                                                                                ?></td>
-                                                                    <td class="align-middle"><span class=" disabled  px-2 py-1 rounded
-                                                                    <?php if ($val['status'] == 'complete') {
-                                                                        echo 'bg-warning';
-                                                                    } else {
-                                                                        echo 'bg-danger';
-                                                                    }
-                                                                    ?>
-                                                                    
-                                                                    "><?= $val['status'] ?></span></td>
-                                                                    <td class="align-middle"><a href="detailsbuyProduct1.php?list_purchas=<?php echo $val['paymentID'] ?>"><button class=" btn btn-primary">Detail</button></a></td>
-                                                                </tr>
-
-                                                            <?php  } ?>
+                                                <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="category">Category Name</label>
+                                                        <input required type="text" name="category" value="<?php echo isset($_GET['idcategory']) ? $idcategory['category'] : ''; ?>" class="form-control" id="category" placeholder="Enter category name">
+                                                    </div>
 
 
 
-
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="pos-show"></div>
                                                 </div>
                                                 <!-- /.card-body -->
-                                            </div>
-                                            <!-- /.card -->
-
-                                        </div>
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </section>
+                                                <div class="card-footer">
+                                                    <button type="submit" name="addcategory" class="btn btn-primary">Save <?php echo isset($_GET['idcategory']) ? 'Change' : ''; ?></button>
+                                                </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
         </div>
         <!-- /.card -->
     </div>
@@ -597,30 +463,5 @@ include "isset/script.php";
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard3.js"></script>
 </body>
-<script>
-    $(document).ready(function() {
-        var getempID = $(".getempID").text();
-        console.log(getempID);
-        $(".listsearch").keyup(function() {
-
-            var search = $(this).val();
-
-            $.ajax({
-                url: "isset/employee_detail_data.php",
-                method: "post",
-                data: {
-                    search: search,
-                    getempID: getempID
-                },
-                success: function(respone) {
-                    $(".search_detail").html(respone);
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            })
-        })
-    })
-</script>
 
 </html>

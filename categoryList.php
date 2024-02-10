@@ -1,6 +1,4 @@
-<?php include "isset/script.php";
-
-?>
+<?php include "isset/script.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -348,8 +346,8 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Product</a></li>
-                                <li class="breadcrumb-item active">Products List</li>
+                                <li class="breadcrumb-item"><a href="#">Category</a></li>
+                                <li class="breadcrumb-item active">Category List</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -367,16 +365,8 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-
                                     <h3 class="card-title d-flex align-items-center p-0 m-0 ">
-                                        <span style="padding-right: 5px;">Row</span>
-                                        <select name="row" id="row" class="custom-select-sm m-0 p-0 col-md-12">
-                                            <option value="5">4</option>
-                                            <option value="10">10</option>
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
 
-                                        </select>
                                     </h3>
 
                                     <div class="card-tools">
@@ -394,27 +384,52 @@
 
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Delete Category</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure?</p>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary btncategory" data-dismiss="modal">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table  table-head-fixed text-nowrap">
                                         <thead>
                                             <tr>
                                                 <th style="width: 10px">No</th>
 
                                                 <th class="">Name</th>
-                                                <th class="">Slug</th>
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center" style="width: 80px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="productsearch">
-                                            <?php foreach ($listproduct as $key => $val) { ?>
+                                            <?php foreach ($category as $key => $val) { ?>
                                                 <tr>
                                                     <td><?= $key + 1 ?></td>
 
-                                                    <td class="align-middle "><?= $val['product_name'] ?></td>
                                                     <td class="align-middle "><?= $val['category'] ?></td>
+
                                                     <td class="align-middle text-center">
-                                                        <i data-productdelete="<?php echo $val['id'] ?>" class="fa-solid fa-trash p-1 pointer iconhover icondelete"></i>
-                                                        <a href="addproduct.php?ideditpro=<?php echo $val['id'] ?>"><i class="fa-solid p-1 iconhover fa-pencil"></i></a>
-                                                        <a href="product_details.php?pageProduct=<?= $val['id'] ?>"><i class="fa-solid fa-file-signature iconhover text-dark p-1"></i></a>
+                                                        <i data-categorydelete="<?php echo $val['id'] ?>" data-toggle="modal" data-target="#modal-default" class="fa-solid fa-trash p-1 pointer iconhover icondelete"></i>
+                                                        <a href="addcategory.php?idcategory=<?php echo $val['id'] ?>"><i class="fa-solid p-1 iconhover fa-pencil"></i></a>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -424,7 +439,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title"></h3>
 
-                                        <div class="card-tools">
+                                        <!-- <div class="card-tools">
                                             <ul class="pagination pagination-sm float-right">
                                                 <li class="page-item"><a class="page-link" href="#">«</a></li>
                                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -432,7 +447,7 @@
                                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                                 <li class="page-item"><a class="page-link" href="#">»</a></li>
                                             </ul>
-                                        </div>
+                                        </div> -->
 
                                         <!-- /.card -->
                                     </div>
@@ -443,7 +458,7 @@
 
                         </div>
 
-
+                        <!-- <div class="show">df</div> -->
                     </div>
                     <!-- /.row -->
                 </div>
@@ -454,7 +469,7 @@
         <!-- /.content-wrapper -->
 
         <!-- Control Sidebar -->
-        <div class="show"></div>
+
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
         </aside>
@@ -490,36 +505,22 @@
 <script>
     $(document).ready(function() {
         $(".icondelete").click(function() {
-            var icondelete = $(this).data('productdelete');
+            var icondelete = $(this).data('categorydelete');
             var $deleteIcon = $(this); // Store the reference to $(this)
+            $(".btncategory").click(function() {
+                $.ajax({
+                    method: 'post',
+                    url: 'isset/deletecategory.php',
+                    data: {
+                        icondeletes: icondelete
+                    },
+                    success: function(response) {
+                        // $(".show").html(response);
+                        $deleteIcon.closest('tr').remove(); // Use the stored reference
+                    }
+                });
+            })
 
-            console.log(icondelete);
-            Swal.fire({
-                title: 'Confirmation',
-                text: 'Are you sure?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'OK',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        method: 'post',
-                        url: 'isset/deleteproduct.php',
-                        data: {
-                            icondeletes: icondelete
-                        },
-                        success: function(response) {
-                            $(".show").html(response);
-                            $deleteIcon.closest('tr').remove(); // Use the stored reference
-                        }
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // Cancel button clicked
-                    // Add your logic here
-
-                }
-            });
 
         });
     });
@@ -530,7 +531,7 @@
             var search = $(this).val();
             $.ajax({
                 method: 'post',
-                url: 'isset/productsearch.php',
+                url: 'isset/deletecategory.php',
                 data: {
                     search: search
                 },

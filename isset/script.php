@@ -368,9 +368,11 @@ if (isset($_POST['addrowsub'])) {
 
     // $statusadd
 
-    $sql = "SELECT * FROM invoice_details WHERE productId = :productId and status like '%$statusadd%'";
+    $sql = "SELECT * FROM invoice_details WHERE productId = :productId and status like '%$statusadd%' and employeeId=:emp ";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":productId", $_POST['myid'], PDO::PARAM_INT);
+    $stmt->bindParam(":productId", $_GET['addp'], PDO::PARAM_INT);
+    $stmt->bindParam(":emp", $create_by, PDO::PARAM_INT);
+
     $stmt->execute();
     $invoice_detail = $stmt->fetch(PDO::FETCH_ASSOC);
     $invoice_product_id = $invoice_detail['productId'];
@@ -380,7 +382,6 @@ if (isset($_POST['addrowsub'])) {
     $stmt->execute();
     $productqty = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT ";
     if ($invoice_product_id) {
         // echo "<script> alert(1)</script>";
         $prodcutminus = $productqty['qty'] -= 1;
@@ -765,3 +766,136 @@ $sql = "SELECT  employee.id as myempID, city,employee_name,phone, image, userid,
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $contact = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_POST['addcategory'])) {
+    if (isset($_GET['idcategory'])) {
+        $sql = "UPDATE category SET category=:category WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":category", $_POST['category'], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $_GET['idcategory'], PDO::PARAM_INT);
+        $stmt->execute();
+    } else {
+        $sql = "INSERT INTO category(category) VALUES(:category)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":category", $_POST['category'], PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+    header("location: categoryList.php");
+    exit;
+}
+$sql = "SELECT * FROM category order by id desc";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$category = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET['idcategory'])) {
+    $sql = "SELECT * FROM category WHERE id=:id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":id", $_GET['idcategory'], PDO::PARAM_INT);
+    $stmt->execute();
+    $idcategory = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+if (isset($_GET['addp'])) {
+
+    // $statusadd
+
+    $sql = "SELECT * FROM invoice_details WHERE productId = :productId and status like '%$statusadd%' and employeeId=:emp ";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":productId", $_GET['addp'], PDO::PARAM_INT);
+    $stmt->bindParam(":emp", $create_by, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $invoice_detail = $stmt->fetch(PDO::FETCH_ASSOC);
+    $invoice_product_id = $invoice_detail['productId'];
+    $sql = "SELECT * FROM products WHERE id=:id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":id", $_GET['addp'], PDO::PARAM_INT);
+    $stmt->execute();
+    $productqty = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($invoice_product_id) {
+        // echo "<script> alert(1)</script>";
+        $prodcutminus = $productqty['qty'] -= 1;
+        print_r($productqty['qty']);
+        $totalqty = $invoice_detail['qty'] += 1;
+        $sql = "UPDATE products SET qty=:qty WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":qty", $prodcutminus, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $_GET['addp'], PDO::PARAM_INT);
+        $stmt->execute();
+        $sql = "UPDATE invoice_details SET qty=:qty WHERE productId=:id and status like '%$statusadd%'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":qty", $totalqty, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $_GET['addp'], PDO::PARAM_INT);
+        $stmt->execute();
+        // header('location: pos.php');
+        // exit();
+        $message = " Update!";
+
+        // Echo the JavaScript code to show the SweetAlert dialog
+
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+        echo '<script>
+Swal.fire({
+title: "Alert",
+text: "' . $message . '",
+icon: "info"
+}).then(() => {
+// Redirect after the alert is closed
+window.location.href = "pos.php";
+});
+</script>';
+    } else {
+        $sql = "SELECT * FROM products WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":id", $_GET['addp'], PDO::PARAM_INT);
+        $stmt->execute();
+        $productPrice = $stmt->fetch(PDO::FETCH_ASSOC);
+        $productPrice1 = $productPrice['price'];
+        $prodcutminus = $productqty['qty'] - 1;
+        $qty = 1;
+        $sql = "UPDATE products SET qty=:qty WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":qty", $prodcutminus, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $_GET['addp'], PDO::PARAM_INT);
+        $stmt->execute();
+        $sql = "INSERT INTO invoice_details(productId, qty, price, status, employeeId)
+                    VALUES(:productId, :qty, :price, :status, :employeeId)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":productId", $_GET['addp'], PDO::PARAM_INT);
+        $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
+        $stmt->bindParam(":employeeId", $create_by, PDO::PARAM_INT);
+        $stmt->bindParam(":price", $productPrice1, PDO::PARAM_STR);
+        $stmt->bindParam(":status", $statusadd, PDO::PARAM_STR);
+        $stmt->execute();
+        $message = "Add Successful!";
+
+        // Echo the JavaScript code to show the SweetAlert dialog
+
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+        echo '<script>
+Swal.fire({
+title: "Alert",
+text: "' . $message . '",
+icon: "info"
+}).then(() => {
+// Redirect after the alert is closed
+window.location.href = "pos.php";
+});
+</script>';
+    }
+}
+
+if (isset($_POST['btnmessage'])) {
+    $chat = "chat";
+    $sql = "INSERT INTO contact(user_one, user_two, text, time, status)
+                VALUES(:user_one, :user_two, :text, :time, :status)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":user_one", $create_by, PDO::PARAM_INT);
+    $stmt->bindParam(":user_two", $_GET['contact'], PDO::PARAM_INT);
+    $stmt->bindParam(":text", $_POST['message'], PDO::PARAM_STR);
+    $stmt->bindParam(":time", $today, PDO::PARAM_STR);
+    $stmt->bindParam(":status", $chat, PDO::PARAM_STR);
+    $stmt->execute();
+}

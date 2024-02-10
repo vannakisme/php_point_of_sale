@@ -1,7 +1,7 @@
 <?php
 include "connection.php";
 session_start();
-$sql = "SELECT products.image, products.id, products.qty, products.price, products.product_name, category.category FROM `products`
+$sql = "SELECT products.image, products.id , products.qty, products.price, products.product_name, category.category FROM `products`
 JOIN category ON products.category_id = category.id  ";
 if (isset($_POST['search'])) {
     $search = $_POST['search'];
@@ -25,9 +25,7 @@ foreach ($listproduct1 as $key => $val) { ?>
 
             <td class="align-middle text-center">
                 <?php if (!$val['qty'] == 0) { ?>
-                    <button class="border-0 add-row-btn" style="background: none;" type="button">
-                        <i class="fa-solid fa-square-plus p-1 pointer iconhover iconpos"></i>
-                    </button>
+                    <a href="pos.php?addp=<?php echo $val['id']; ?>" class="text-dark"> <i class="fa-solid fa-square-plus p-1 pointer iconhover iconpos"></i></a>
                 <?php } else {
                     echo "no qty";
                 } ?>
@@ -37,7 +35,7 @@ foreach ($listproduct1 as $key => $val) { ?>
                 <input type="hidden" name="myid" value="<?= $val['id'] ?>">
                 <input type="hidden" name="qty" value="<?= $val['qty'] ?>">
             </td>
-            <td><button class="btn btn-primary" type="submit" name="lsjf">Hello</button></td>
+
         </tr>
     </form>
 <?php } ?>

@@ -369,7 +369,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <?php
-                    print_r($_POST);
+                    // print_r($_POST);
                     // print_r($_SESSION['customerId']);
                     ?>
 
@@ -533,7 +533,7 @@
                                             <?php } ?>
                                         </tbody>
                                     </table>
-                                    <div class="pos-show"></div>
+                                    <div style="display: none;" class="pos-show"></div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>

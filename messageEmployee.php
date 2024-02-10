@@ -1,4 +1,16 @@
 <?php include "isset/script.php";
+$getmessage = $_GET['contact'];
+
+$sql = "SELECT contact.id as contactID,contact.user_one, contact.user_two, employee.id as empID, employee.employee_name,contact.time, contact.text, employee.image FROM contact
+JOIN employee ON contact.user_one = employee.id WHERE (contact.user_one like '%$create_by%' and contact.user_two like '%$getmessage%' and contact.status like 'chat') or  (contact.user_two like '%$create_by%' and contact.user_one like '%$getmessage%' and contact.status like 'chat')  ORDER BY contact.id asc
+";
+// or (contact.user_two like '%$create_by%' and contact.user_two like '%$getmessage%)
+$stmt = $conn->prepare($sql);
+// $stmt->bindParam(":user_one", $create_by, PDO::PARAM_INT);
+// $stmt->bindParam(":user_tow", $create_by, PDO::PARAM_INT);
+
+$stmt->execute();
+$messageEmp = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -343,14 +355,14 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                             <h1 class="m-0">Products List</h1>
-                        </div><!-- /.col -->
+                        </div> -->
                         <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
+                            <!-- <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Product</a></li>
                                 <li class="breadcrumb-item active">Products List</li>
-                            </ol>
+                            </ol> -->
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -362,87 +374,81 @@
                 <div class="container-fluid">
                     <div class="row">
 
-
-                        <!-- /.card-header -->
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-
-                                    <h3 class="card-title d-flex align-items-center p-0 m-0 ">
-                                        <span style="padding-right: 5px;">Row</span>
-                                        <select name="row" id="row" class="custom-select-sm m-0 p-0 col-md-12">
-                                            <option value="5">4</option>
-                                            <option value="10">10</option>
-                                            <option value="15">15</option>
-                                            <option value="20">20</option>
-
-                                        </select>
-                                    </h3>
-
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control listsearch float-right" placeholder="Search">
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="card direct-chat direct-chat-primary col-12">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">Direct Chat</h3>
+                                <!-- <?php print_r($_POST); ?> -->
+                                <div class="card-tools">
+                                    <!-- <span title="3 New Messages" class="badge badge-primary">3</span> -->
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
-
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table  table-head-fixed text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 10px">No</th>
-
-                                                <th class="">Name</th>
-                                                <th class="">Slug</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="productsearch">
-                                            <?php foreach ($listproduct as $key => $val) { ?>
-                                                <tr>
-                                                    <td><?= $key + 1 ?></td>
-
-                                                    <td class="align-middle "><?= $val['product_name'] ?></td>
-                                                    <td class="align-middle "><?= $val['category'] ?></td>
-                                                    <td class="align-middle text-center">
-                                                        <i data-productdelete="<?php echo $val['id'] ?>" class="fa-solid fa-trash p-1 pointer iconhover icondelete"></i>
-                                                        <a href="addproduct.php?ideditpro=<?php echo $val['id'] ?>"><i class="fa-solid p-1 iconhover fa-pencil"></i></a>
-                                                        <a href="product_details.php?pageProduct=<?= $val['id'] ?>"><i class="fa-solid fa-file-signature iconhover text-dark p-1"></i></a>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                    <!-- /.card-body -->
-                                    <div class="card-header">
-                                        <h3 class="card-title"></h3>
-
-                                        <div class="card-tools">
-                                            <ul class="pagination pagination-sm float-right">
-                                                <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- /.card -->
-                                    </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body" id="card-body">
+                                <!-- Conversations are loaded here -->
+                                <div class="direct-chat-messages">
+                                    <!-- Message. Default to the left -->
+                                    <?php foreach ($messageEmp as $key => $val) {
+                                        if ($val['user_one'] == $create_by) {
+                                    ?>
+                                            <div id="deletemsg1" class="direct-chat-msg">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-left"><?= $val['employee_name'] ?></span>
+                                                    <span class="direct-chat-timestamp float-right"><?= date("j M g:i a", strtotime($val['time'])); ?> <i title="Delete Message" data-deletemsg="<?php echo $val['contactID'] ?>" class="fas deletemsg fa-minus pointer mx-2"></i></span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="image/<?= $val['image'] ?>" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    <?= $val['text'] ?>
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                        <?php } else { ?>
+                                            <!-- Message to the right -->
+                                            <div class="direct-chat-msg right">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-right"><?= $val['employee_name'] ?></span>
+                                                    <span class="direct-chat-timestamp float-left"><?= date("j M g:i a", strtotime($val['time'])); ?> <i title="Delete Message" data-deletemsg="<?php echo $val['contactID'] ?>" class="fas deletemsg fa-minus pointer mx-2"></i></span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="image/<?= $val['image'] ?>" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    <?= $val['text'] ?>
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+                                    <?php }
+                                    } ?>
+                                    <!-- /.direct-chat-msg -->
+                                    <!-- <div class="messageTop" style="position: relative;bottom: 0;">Hello</div> -->
+                                    <!-- /.direct-chat-pane -->
                                 </div>
                                 <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <form method="post">
+                                        <div class="input-group">
+                                            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                            <span class="input-group-append">
+                                                <button type="submit" name="btnmessage" class="btn btn-primary">Send</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card-footer-->
                             </div>
-                            <!-- /.card -->
 
                         </div>
-
 
                     </div>
                     <!-- /.row -->
@@ -494,35 +500,44 @@
             var $deleteIcon = $(this); // Store the reference to $(this)
 
             console.log(icondelete);
-            Swal.fire({
-                title: 'Confirmation',
-                text: 'Are you sure?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'OK',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        method: 'post',
-                        url: 'isset/deleteproduct.php',
-                        data: {
-                            icondeletes: icondelete
-                        },
-                        success: function(response) {
-                            $(".show").html(response);
-                            $deleteIcon.closest('tr').remove(); // Use the stored reference
-                        }
-                    });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    // Cancel button clicked
-                    // Add your logic here
-
+            $.ajax({
+                method: 'post',
+                url: 'isset/deleteproduct.php',
+                data: {
+                    icondeletes: icondelete
+                },
+                success: function(response) {
+                    $(".show").html(response);
+                    $deleteIcon.closest('tr').remove(); // Use the stored reference
                 }
             });
-
         });
     });
+</script>
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".deletemsg", function() {
+            var deletemsg = $(this).data("deletemsg");
+            // direct-chat-msg
+            $(this).closest(".direct-chat-msg").remove();
+
+            // $(this).closest("#deletemsg1").remove();
+            $.ajax({
+                url: "isset/deletemsg.php",
+                method: "post",
+                data: {
+                    deletemsg: deletemsg
+                },
+                success: function(response) {
+
+                    // alert(deletemsg);
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+                }
+            }, 2000)
+        })
+    })
 </script>
 <script>
     $(document).ready(function() {
@@ -542,5 +557,11 @@
     })
 </script>
 
+<!-- <script>
+    window.addEventListener('DOMContentLoaded', function() {
+        var box = document.getElementById('card-body'); // Replace 'your-box-id' with the actual ID of your box element
+        box.scrollTop = box.scrollHeight;
+    });
+</script> -->
 
 </html>

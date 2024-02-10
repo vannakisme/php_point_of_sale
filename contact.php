@@ -377,13 +377,13 @@
                                                 </ul>
                                             </div>
                                             <div class="col-5 text-center">
-                                                <img src="image/anime4.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                                <img src="image/<?php echo $val['image'] ?>" style="width: 108px;height: 108px;object-fit: cover;" alt="user-avatar" class="img-circle img-fluid">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-right">
-                                            <a href="#" class="btn btn-sm bg-teal">
+                                            <a href="messageEmployee.php?contact=<?php echo $val['myempID'] ?>" class="btn btn-sm bg-teal">
                                                 <i class="fas fa-comments"></i>
                                             </a>
                                             <a href="#" class="btn btn-sm btn-primary">
